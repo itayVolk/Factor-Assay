@@ -93,7 +93,7 @@ clear(control, *) {
 }
 
 calculate(control) {
-    static default := {Last: "Test", First: "Test", Age: 55, Dossier: "Test", Service: "Test", ID: "SAC2", Technician: "Bob", FSL: 3333, SP: 4444, FDP: 5555, FAV: 0.26,
+    static default := {Last: "Test", First: "Test", Age: 55, Dossier: "Test", Service: "Test", ID: "SAC2", Technician: "Bob", FSL: 3333, SP: 4444, FDP: 5555, FAV: 26,
                         Factor: 2, SP1_10: 80.8, SP1_20: 97.5, SP1_40: 117.3, SP2_10: 82.8, SP2_20: 102.3, SP2_40: 118.3,
                         P1_10: 130.2, P1_20:123.5, P1_40: 139.7, P2_10: 110.5, P2_20: 128.5, P2_40: 139.6}
     static dates := ["EDFSL", "EDSP", "EDFDP", "Date"]
@@ -107,10 +107,8 @@ calculate(control) {
             if val is Number {
                 if val == Round(val) {
                     control.Gui[key].Value :=  Format("{:.0f}", val)
-                } else if val == Round(val, 1){
-                    control.Gui[key].Value :=  Format("{:.1f}", val)
                 } else {
-                    control.Gui[key].Value :=  Format("{:.2f}", val)
+                    control.Gui[key].Value :=  Format("{:.1f}", val)
                 }
             } else {
                 control.Gui[key].Value := val
@@ -140,9 +138,9 @@ calculate(control) {
         /(3*(Ln(100)**2+Ln(50)**2+Ln(25)**2)-(Ln(100)+Ln(50)+Ln(25))**2)
     b := (sub.SP_avg_10+sub.SP_avg_20+sub.SP_avg_40-m*(Ln(100)+Ln(50)+Ln(25)))/3
 
-    sub.res_10 := Exp((sub.P_avg_10-b)/m)*sub.FAV
-    sub.res_20 := Exp((sub.P_avg_20-b)/m)*sub.FAV
-    sub.res_40 := Exp((sub.P_avg_40-b)/m)*sub.FAV
+    sub.res_10 := Exp((sub.P_avg_10-b)/m)*sub.FAV/100
+    sub.res_20 := Exp((sub.P_avg_20-b)/m)*sub.FAV/100
+    sub.res_40 := Exp((sub.P_avg_40-b)/m)*sub.FAV/100
 
     sub.avg := (sub.res_10+sub.res_20+sub.res_40)/3
     sub.sd := Sqrt(((sub.res_10-sub.avg)**2+(sub.res_20-sub.avg)**2+(sub.res_40-sub.avg)**2)/3)
