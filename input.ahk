@@ -114,10 +114,10 @@ calculate(control) {
                 control.Gui[key].Value := val
             }
 
-            if control.Gui[key].Type == "DropDownList" {
+            if control.Gui[key].Type == "DDL" {
                 sub.%key% := control.Gui[key].Text
             } else {
-               sub.%key% := val
+                sub.%key% := val
             }
         }
     }
@@ -188,7 +188,7 @@ lab(control, *) {
     template := FileOpen("Lab-template.html", "r").Read()
     static vars := ["Factor", "Last", "First", "Age", "Dossier", "Service", "P_avg_10", "P_avg_20", "P_avg_40", "SP_avg_10", "SP_avg_20", "SP_avg_40", "res_10", "res_20", "res_40", "avg", "sd", "cv", "Technician", "Date", "ID", "SP", "EDSP", "FAV"]
     for var in vars {
-        template := StrReplace(template, "<" var ">", sub.%var%)
+        template := StrReplace(template, "|" var "|", sub.%var%)
     }
     temp := FileOpen("temp.html", "w")
     temp.Write(template)
@@ -208,9 +208,9 @@ patient(control, *) {
     }
     file := FileOpen(name, "w")
     template := FileOpen("Patient-template.html", "r").Read()
-    static vars := ["Factor", "Last", "First", "Age", "Dossier", "Service", "avg", "Technician", "Date"]
+    static vars := ["Factor", "Last", "First", "Age", "Dossier", "Service", "avg", "Technician", "Date", "ID"]
     for var in vars {
-        template := StrReplace(template, "<" var ">", sub.%var%)
+        template := StrReplace(template, "|" var "|", sub.%var%)
     }
     temp := FileOpen("temp.html", "w")
     temp.Write(template)
