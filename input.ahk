@@ -142,7 +142,7 @@ calculate(control) {
     }
 
     for field in dates{
-        sub.%field% := FormatTime(sub.%field%, "MM dd yyyy")
+        sub.%field% := FormatTime(sub.%field%, "dd MM yyyy")
     }
 
     sub.SP_avg_10 := (sub.SP1_10+sub.SP2_10)/2
@@ -157,7 +157,7 @@ calculate(control) {
     for count in counts {
         if sub.P1_%count% && sub.P2_%count% {
             sub.P_avg_%count% := (sub.P1_%count%+sub.P2_%count%)/2
-            sub.res_%count% := Exp((sub.P_avg_%count%-b)/m)*sub.FAV/100*count
+            sub.res_%count% := Exp((sub.P_avg_%count%-b)/m)*sub.FAV*count/1000
             samp.Push(sub.res_%count%)
         } else {
             sub.P_avg_%count% := "----"
